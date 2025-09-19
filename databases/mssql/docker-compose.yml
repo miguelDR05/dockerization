@@ -1,0 +1,20 @@
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver_container
+    env_file:
+      - .env
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+      - SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+      # - ./init:/init:ro   # opcional: si pones scripts de inicialización
+    restart: "no"  # cambia a "unless-stopped" o "always" si quieres autoarrancar
+    # networks: default  # puedes definir redes si lo deseas
+
+volumes:
+  mssql_data:
