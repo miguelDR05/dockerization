@@ -1,11 +1,10 @@
 #!/bin/bash
-# SQL Server - Script de inicio con verificaciones
-# Configuración
+# PostgreSQL - Script de inicio con verificaciones
 cd "$(dirname "$0")"
-SERVICE_NAME="SQL Server"
+SERVICE_NAME="PostgreSQL"
 COMPOSE_FILE="docker-compose.yml"
 ENV_FILE=".env"
-CONTAINER_NAME="sqlserver_container"
+CONTAINER_NAME="postgres_container"
 
 # Colores para output
 GREEN='\033[0;32m'
@@ -19,7 +18,7 @@ echo -e "${BLUE}🚀 Iniciando $SERVICE_NAME...${NC}"
 # Verificar si existe el archivo .env
 if [ ! -f "$ENV_FILE" ]; then
     echo -e "${RED}❌ Archivo $ENV_FILE no encontrado${NC}"
-    echo -e "${YELLOW}💡 Crea el archivo .env con SA_PASSWORD=tu_password${NC}"
+    echo -e "${YELLOW}💡 Crea el archivo .env con POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB${NC}"
     exit 1
 fi
 
@@ -44,8 +43,8 @@ else
 fi
 
 # Esperar a que el servicio esté listo
-echo -e "${YELLOW}⏳ Esperando a que SQL Server esté listo...${NC}"
-sleep 10
+echo -e "${YELLOW}⏳ Esperando a que PostgreSQL esté listo...${NC}"
+sleep 5
 
 # Verificar estado
 if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
@@ -55,10 +54,14 @@ if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
     docker ps --filter name=$CONTAINER_NAME --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
     echo ""
     echo -e "${BLUE}🌐 Información de conexión:${NC}"
-    echo "  📍 Servidor: localhost,1433"
-    echo "  👤 Usuario: sa"
+    echo "  📍 Servidor: localhost:5432"
+    echo "  🗄️  Base de datos: demo_db (configurada en .env)"
+    echo "  👤 Usuario: admin (configurado en .env)"
     echo "  🔑 Contraseña: (definida en .env)"
-    echo "  🛠️  Cliente recomendado: Azure Data Studio o SQL Server Management Studio"
+    echo "  🛠️  Cliente recomendado: pgAdmin, DBeaver, psql"
+    echo ""
+    echo -e "${BLUE}📋 Datos de prueba incluidos:${NC}"
+    echo "  👥 Tabla 'empleados' con 3 registros de ejemplo"
 else
     echo -e "${RED}❌ Error al iniciar $SERVICE_NAME${NC}"
     echo -e "${YELLOW}💡 Revisa los logs con: docker logs $CONTAINER_NAME${NC}"

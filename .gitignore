@@ -147,6 +147,7 @@ coverage/
 **/*.dump
 **/*.backup
 **/backup/
+**/backups/
 
 # Configuration backups
 **/*.conf.bak
