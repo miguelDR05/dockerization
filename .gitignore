@@ -1,0 +1,185 @@
+# =============================================================================
+# Docker Data & Runtime Files
+# =============================================================================
+
+# Database data directories (persistent volumes)
+**/data/
+**/postgres_data/
+**/mysql_data/
+**/mssql_data/
+**/mongo_data/
+**/redis_data/
+
+# Database specific files
+**/*.sock
+**/*.pid
+**/*.log
+**/*.ibd
+**/*.dblwr
+**/ib_*
+**/undo_*
+**/binlog.*
+**/auto.cnf
+**/ib_buffer_pool
+**/ibdata*
+**/ibtmp*
+**/#innodb_*/
+**/#innodb_temp/
+
+# SSL/TLS certificates and keys (database generated)
+**/*-key.pem
+**/*-cert.pem
+**/ca-key.pem
+**/ca.pem
+**/client-*.pem
+**/server-*.pem
+**/private_key.pem
+**/public_key.pem
+
+# =============================================================================
+# Docker & Container Files
+# =============================================================================
+
+# Docker volumes and images
+.docker/
+**/volumes/
+
+# Container logs
+**/logs/
+**/*.log
+
+# Environment files with sensitive data
+**/.env.local
+**/.env.production
+**/.env.secrets
+
+# =============================================================================
+# IDE & Editor Files
+# =============================================================================
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+
+# =============================================================================
+# Operating System Files
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# =============================================================================
+# Temporary & Cache Files
+# =============================================================================
+
+# General temp files
+*.tmp
+*.temp
+*.cache
+**/temp/
+**/tmp/
+
+# Package managers
+node_modules/
+vendor/
+__pycache__/
+*.pyc
+.pip-cache/
+
+# =============================================================================
+# Documentation & Build Files
+# =============================================================================
+
+# Generated documentation
+**/build/
+**/dist/
+**/.next/
+**/.nuxt/
+
+# =============================================================================
+# Development & Testing
+# =============================================================================
+
+# Test coverage
+coverage/
+*.coverage
+.nyc_output/
+
+# Debug files
+*.debug
+
+# =============================================================================
+# Backup Files
+# =============================================================================
+
+# Database backups (comment out if you want to track them)
+**/*.sql.gz
+**/*.dump
+**/*.backup
+**/backup/
+
+# Configuration backups
+**/*.conf.bak
+**/*.yml.bak
+**/*.yaml.bak
+
+# =============================================================================
+# IMPORTANT: Files to KEEP (negation patterns)
+# =============================================================================
+
+# Keep example environment files
+!**/.env.example
+!**/.env.template
+
+# Keep initialization scripts
+!**/init/
+!**/initdb/
+!**/*.sql
+
+# Keep configuration templates
+!**/conf.d/
+!**/config/
+!**/*.conf
+!**/*.cnf
+!**/*.yml
+!**/*.yaml
+
+# Keep scripts
+!**/*.sh
+!**/*.py
+!**/*.js
+
+# Keep documentation
+!**/README*
+!**/docs/
+!**/*.md
