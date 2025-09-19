@@ -20,13 +20,43 @@ PHPMYADMIN_RUNNING=$(docker ps -q -f name=$PHPMYADMIN_CONTAINER)
 
 if [ -n "$MYSQL_RUNNING" ] || [ -n "$PHPMYADMIN_RUNNING" ]; then
     echo -e "${YELLOW}📦 Deteniendo contenedores...${NC}"
-    docker-compose down
     
-    if [ $? -eq 0 ]; then
+    # Intentar detener con docker compose primero
+    if command -v docker-compose &> /dev/null; then
+        docker-compose down
+    elif docker compose version &> /dev/null; then
+        docker compose down
+    else
+        # Fallback: detener directamente los contenedores
+        [ -n "$MYSQL_RUNNING" ] && docker stop $MYSQL_CONTAINER
+        [ -n "$PHPMYADMIN_RUNNING" ] && docker stop $PHPMYADMIN_CONTAINER
+    fi
+    
+    # Esperar un momento para que se detengan
+    sleep 2
+    
+    # Verificar si realmente se detuvieron
+    MYSQL_STILL_RUNNING=$(docker ps -q -f name=$MYSQL_CONTAINER)
+    PHPMYADMIN_STILL_RUNNING=$(docker ps -q -f name=$PHPMYADMIN_CONTAINER)
+    
+    if [ -z "$MYSQL_STILL_RUNNING" ] && [ -z "$PHPMYADMIN_STILL_RUNNING" ]; then
         echo -e "${GREEN}✅ $SERVICE_NAME detenido correctamente${NC}"
     else
-        echo -e "${RED}❌ Error al detener $SERVICE_NAME${NC}"
-        exit 1
+        echo -e "${RED}❌ Algunos contenedores aún están corriendo. Forzando detención...${NC}"
+        [ -n "$MYSQL_STILL_RUNNING" ] && docker stop $MYSQL_CONTAINER
+        [ -n "$PHPMYADMIN_STILL_RUNNING" ] && docker stop $PHPMYADMIN_CONTAINER
+        sleep 1
+        
+        # Verificación final
+        MYSQL_FINAL=$(docker ps -q -f name=$MYSQL_CONTAINER)
+        PHPMYADMIN_FINAL=$(docker ps -q -f name=$PHPMYADMIN_CONTAINER)
+        
+        if [ -z "$MYSQL_FINAL" ] && [ -z "$PHPMYADMIN_FINAL" ]; then
+            echo -e "${GREEN}✅ $SERVICE_NAME detenido forzadamente${NC}"
+        else
+            echo -e "${RED}❌ Error: No se pudieron detener todos los contenedores${NC}"
+            exit 1
+        fi
     fi
 elif [ "$(docker ps -aq -f name=$MYSQL_CONTAINER)" ] || [ "$(docker ps -aq -f name=$PHPMYADMIN_CONTAINER)" ]; then
     echo -e "${YELLOW}⚠️  Los contenedores ya estaban detenidos${NC}"

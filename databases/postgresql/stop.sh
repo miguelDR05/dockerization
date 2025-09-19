@@ -1,8 +1,8 @@
 #!/bin/bash
-# SQL Server - Script de parada
+# PostgreSQL - Script de parada
 cd "$(dirname "$0")"
-CONTAINER_NAME="sqlserver_container"
-SERVICE_NAME="SQL Server"
+CONTAINER_NAME="postgres_container"
+SERVICE_NAME="PostgreSQL"
 
 # Colores para output
 GREEN='\033[0;32m'
