@@ -68,58 +68,10 @@ cd dockerization
 ### 2. Elegir una herramienta
 ```bash
 # Ejemplo: MySQL con phpMyAdmin
-   - Docker Compose básico
-   - Variables de entorno
-   - Puertos y conexiones
-
-2. **PostgreSQL** (`databases/postgresql/`) - Conceptos intermedios
-   - Volúmenes persistentes
-   - Scripts de inicialización
-   - Gestión de datos
-
-3. **MySQL** (`databases/mysql/`) - Configuración avanzada
-   - Múltiples servicios
-   - Redes personalizadas
-   - Herramientas de administración
-   - Configuraciones personalizadas
-
-## 🛠️ Características por Categoría
-
-### 🗄️ **Databases**
-- ✅ Sistemas populares: MySQL, PostgreSQL, SQL Server
-- ✅ Herramientas de administración incluidas
-- ✅ Scripts de inicialización con datos de prueba
-- ✅ Configuraciones optimizadas para desarrollo
-
-### 🔧 **Development Tools**
-- ✅ IDEs web (VS Code Server, Theia)
-- ✅ Control de versiones (GitLab CE, Gitea)
-- ✅ Administradores de BD independientes
-
-### 🚀 **Runtimes**
-- ✅ Entornos de desarrollo completos
-- ✅ Gestores de paquetes incluidos
-- ✅ Configuraciones multi-versión
-
-## 🤝 Contribuir
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-herramienta`)
-3. Commit tus cambios (`git commit -m 'feat: add nueva-herramienta'`)
-4. Push a la rama (`git push origin feature/nueva-herramienta`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## 🏷️ Tags
-
-`docker` `docker-compose` `development` `database` `mysql` `postgresql` `sqlserver` `devops` `containers` `learning`
-
----
-
-**⭐ Si este proyecto te ayuda, no olvides darle una estrella en GitHub**
+cd databases/mysql
+cp .env.example .env
+# Editar variables de entorno
+nano .env
 ```
 
 ### 3. Levantar los servicios
